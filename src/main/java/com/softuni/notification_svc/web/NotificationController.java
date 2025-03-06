@@ -1,7 +1,10 @@
 package com.softuni.notification_svc.web;
 
+import com.softuni.notification_svc.model.Notification;
 import com.softuni.notification_svc.model.NotificationSettings;
 import com.softuni.notification_svc.service.NotificationService;
+import com.softuni.notification_svc.web.dto.NotificationRequest;
+import com.softuni.notification_svc.web.dto.NotificationResponse;
 import com.softuni.notification_svc.web.dto.NotificationSettingsResponse;
 import com.softuni.notification_svc.web.dto.UpsertNotificationSettings;
 import com.softuni.notification_svc.web.mapper.DtoMapper;
@@ -10,6 +13,7 @@ import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 
+import java.util.List;
 import java.util.UUID;
 
 @RestController
@@ -45,5 +49,36 @@ public class NotificationController {
         return ResponseEntity
                 .status(HttpStatus.OK)
                 .body(responseDto);
+    }
+
+    @PostMapping
+    public ResponseEntity<NotificationResponse> sendNotification(@RequestBody NotificationRequest notificationRequest) {
+
+        // Entity
+        Notification notification = notificationService.sendNotification(notificationRequest);
+
+        // DTO
+        NotificationResponse response = DtoMapper.fromNotification(notification);
+
+        return ResponseEntity
+                .status(HttpStatus.CREATED)
+                .body(response);
+    }
+
+    @GetMapping
+    public ResponseEntity<List<NotificationResponse>> getNotificationHistory(@RequestParam(name = "userId") UUID userId) {
+
+        List<NotificationResponse> notificationHistory = notificationService.getNotificationHistory(userId).stream().map(DtoMapper::fromNotification).toList();
+
+        return ResponseEntity
+                .status(HttpStatus.OK)
+                .body(notificationHistory);
+    }
+
+    //  Endpoint: GET /api/v1/notifications/test  = "Hello, unknown user!"
+    @GetMapping("/test")
+    public ResponseEntity<String> getHelloWorld(@RequestParam(name = "name") String name) {
+
+        return ResponseEntity.ok("Hello, " + name + " user!");
     }
 }
