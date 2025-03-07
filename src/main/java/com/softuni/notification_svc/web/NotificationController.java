@@ -75,6 +75,18 @@ public class NotificationController {
                 .body(notificationHistory);
     }
 
+    @PutMapping("/settings")
+    public ResponseEntity<NotificationSettingsResponse> changeNotificationPreference(@RequestParam(name = "userId") UUID userId, @RequestParam(name = "enabled") boolean enabled) {
+
+        NotificationSettings notificationSettings = notificationService.changeNotificationSettings(userId, enabled);
+
+        NotificationSettingsResponse responseDto = DtoMapper.fromNotificationPreference(notificationSettings);
+
+        return ResponseEntity
+                .status(HttpStatus.OK)
+                .body(responseDto);
+    }
+
     //  Endpoint: GET /api/v1/notifications/test  = "Hello, unknown user!"
     @GetMapping("/test")
     public ResponseEntity<String> getHelloWorld(@RequestParam(name = "name") String name) {

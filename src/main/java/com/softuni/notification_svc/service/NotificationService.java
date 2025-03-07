@@ -112,4 +112,11 @@ public class NotificationService {
 
         return notificationRepository.findAllByUserIdAndDeletedIsFalse(userId);
     }
+
+    public NotificationSettings changeNotificationSettings(UUID userId, boolean enabled) {
+
+        NotificationSettings notificationSettings = getPreferenceByUserId(userId);
+        notificationSettings.setEnabled(enabled);
+        return settingsRepository.save(notificationSettings);
+    }
 }
