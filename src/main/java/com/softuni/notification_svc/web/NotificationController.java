@@ -93,4 +93,21 @@ public class NotificationController {
 
         return ResponseEntity.ok("Hello, " + name + " user!");
     }
+
+    // DELETE /api/v1/notifications
+    @DeleteMapping
+    public ResponseEntity<Void> clearNotificationHistory(@RequestParam(name = "userId") UUID userId) {
+
+        notificationService.clearNotifications(userId);
+
+        return ResponseEntity.ok().body(null);
+    }
+
+    @PutMapping
+    public ResponseEntity<Void> retryFailedNotifications(@RequestParam(name = "userId") UUID userId) {
+
+        notificationService.retryFailedNotifications(userId);
+
+        return ResponseEntity.ok().body(null);
+    }
 }

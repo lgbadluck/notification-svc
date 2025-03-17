@@ -119,4 +119,43 @@ public class NotificationService {
         notificationSettings.setEnabled(enabled);
         return settingsRepository.save(notificationSettings);
     }
+
+    public void clearNotifications(UUID userId) {
+
+        List<Notification> notifications = getNotificationHistory(userId);
+
+        notifications.forEach(notification -> {
+            notification.setDeleted(true);
+            notificationRepository.save(notification);
+        });
+    }
+
+    public void retryFailedNotifications(UUID userId) {
+
+        NotificationSettings userNotificationSettings = getPreferenceByUserId(userId);
+        if (!userNotificationSettings.isEnabled()) {
+            throw new IllegalArgumentException("User with id %s does not allow to receive notifications.".formatted(userId));
+        }
+
+        List<Notification> failedNotifications = notificationRepository.findAllByUserIdAndStatus(userId, NotificationStatus.FAILED);
+        failedNotifications = failedNotifications.stream().filter(notification ->  !notification.isDeleted()).toList();
+
+        for (Notification notification : failedNotifications) {
+
+            SimpleMailMessage message = new SimpleMailMessage();
+            message.setTo(userNotificationSettings.getContactInfo());
+            message.setSubject(notification.getSubject());
+            message.setText(notification.getBody());
+
+            try {
+                mailSender.send(message);
+                notification.setStatus(NotificationStatus.SUCCEEDED);
+            } catch (Exception e) {
+                notification.setStatus(NotificationStatus.FAILED);
+                log.warn("There was an issue sending an email to %s due to %s.".formatted(userNotificationSettings.getContactInfo(), e.getMessage()));
+            }
+
+            notificationRepository.save(notification);
+        }
+    }
 }
