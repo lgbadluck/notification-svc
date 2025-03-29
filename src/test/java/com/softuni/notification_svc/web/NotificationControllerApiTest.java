@@ -6,7 +6,6 @@ import com.softuni.notification_svc.model.Notification;
 import com.softuni.notification_svc.model.NotificationSettings;
 import com.softuni.notification_svc.service.NotificationService;
 import com.softuni.notification_svc.web.dto.NotificationRequest;
-import com.softuni.notification_svc.web.dto.NotificationResponse;
 import com.softuni.notification_svc.web.dto.UpsertNotificationSettings;
 import com.softuni.notification_svc.web.mapper.DtoMapper;
 import org.junit.jupiter.api.Test;
