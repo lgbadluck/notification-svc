@@ -1,5 +1,6 @@
 package com.softuni.notification_svc.model;
 
+import com.fasterxml.jackson.annotation.JsonFormat;
 import jakarta.persistence.*;
 import lombok.AllArgsConstructor;
 import lombok.Builder;
@@ -40,11 +41,10 @@ public class Notification {
 
         private boolean deleted;
 
-        @Column(nullable = false)
         @CreationTimestamp
+        @JsonFormat(shape = JsonFormat.Shape.STRING, pattern = "yyyy-MM-dd'T'HH:mm:ss")
         private LocalDateTime createdOn;
 
-        @Column(nullable = false)
         @UpdateTimestamp
         private LocalDateTime updatedOn;
 }

@@ -30,9 +30,9 @@ public class NotificationController {
     @PostMapping("/settings")
     public ResponseEntity<NotificationSettingsResponse> upsertNotificationSettings(@RequestBody UpsertNotificationSettings upsertNotificationSettings) {
 
-        NotificationSettings notificationPreference = notificationService.upsertNotificationSettings(upsertNotificationSettings);
+        NotificationSettings notificationSettings = notificationService.upsertNotificationSettings(upsertNotificationSettings);
 
-        NotificationSettingsResponse responseDto = DtoMapper.fromNotificationSettings(notificationPreference);
+        NotificationSettingsResponse responseDto = DtoMapper.fromNotificationSettings(notificationSettings);
 
         return ResponseEntity
                 .status(HttpStatus.CREATED)
@@ -42,9 +42,9 @@ public class NotificationController {
     @GetMapping("/settings")
     public ResponseEntity<NotificationSettingsResponse> getUserNotificationSettings(@RequestParam(name = "userId") UUID userId) {
 
-        NotificationSettings notificationPreference = notificationService.getPreferenceByUserId(userId);
+        NotificationSettings notificationSettings = notificationService.getPreferenceByUserId(userId);
 
-        NotificationSettingsResponse responseDto = DtoMapper.fromNotificationSettings(notificationPreference);
+        NotificationSettingsResponse responseDto = DtoMapper.fromNotificationSettings(notificationSettings);
 
         return ResponseEntity
                 .status(HttpStatus.OK)
@@ -85,13 +85,6 @@ public class NotificationController {
         return ResponseEntity
                 .status(HttpStatus.OK)
                 .body(responseDto);
-    }
-
-    //  Endpoint: GET /api/v1/notifications/test  = "Hello, unknown user!"
-    @GetMapping("/test")
-    public ResponseEntity<String> getHelloWorld(@RequestParam(name = "name") String name) {
-
-        return ResponseEntity.ok("Hello, " + name + " user!");
     }
 
     // DELETE /api/v1/notifications

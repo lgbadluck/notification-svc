@@ -34,11 +34,9 @@ public class NotificationSettings {
     @Column(nullable = false)
     private String contactInfo;
 
-    @Column(nullable = false)
     @CreationTimestamp
     private LocalDateTime createdOn;
 
-    @Column(nullable = false)
     @UpdateTimestamp
     private LocalDateTime updatedOn;
 }

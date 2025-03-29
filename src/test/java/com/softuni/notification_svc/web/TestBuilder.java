@@ -7,8 +7,6 @@ import com.softuni.notification_svc.model.NotificationType;
 import com.softuni.notification_svc.web.dto.NotificationRequest;
 import com.softuni.notification_svc.web.dto.NotificationTypeRequest;
 import com.softuni.notification_svc.web.dto.UpsertNotificationSettings;
-import jakarta.validation.constraints.NotBlank;
-import jakarta.validation.constraints.NotNull;
 import lombok.experimental.UtilityClass;
 
 import java.time.LocalDateTime;
@@ -23,7 +21,7 @@ public class TestBuilder {
                 .id(UUID.randomUUID())
                 .userId(userID)
                 .isEnabled(true)
-                .contactInfo("text")
+                .contactInfo("test@email.com")
                 .type(NotificationType.EMAIL)
                 .updatedOn(LocalDateTime.now())
                 .createdOn(LocalDateTime.now())
