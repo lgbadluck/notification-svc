@@ -2,12 +2,14 @@ package com.softuni.notification_svc.web;
 
 import com.fasterxml.jackson.databind.ObjectMapper;
 import com.fasterxml.jackson.datatype.jsr310.JavaTimeModule;
+import com.softuni.notification_svc.service.NotificationService;
 import com.softuni.notification_svc.web.dto.ErrorResponse;
 import org.junit.jupiter.api.Test;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.test.autoconfigure.web.servlet.WebMvcTest;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.MediaType;
+import org.springframework.test.context.bean.override.mockito.MockitoBean;
 import org.springframework.test.web.servlet.MockMvc;
 import org.springframework.test.web.servlet.request.MockHttpServletRequestBuilder;
 
@@ -16,6 +18,9 @@ import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.
 
 @WebMvcTest(NotificationController.class)
 public class ExceptionAdviceApiTest {
+
+    @MockitoBean
+    private NotificationService notificationService;
 
     @Autowired
     private MockMvc mockMvc;
