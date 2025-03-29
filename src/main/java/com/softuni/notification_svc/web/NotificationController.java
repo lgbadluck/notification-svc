@@ -32,7 +32,7 @@ public class NotificationController {
 
         NotificationSettings notificationPreference = notificationService.upsertNotificationSettings(upsertNotificationSettings);
 
-        NotificationSettingsResponse responseDto = DtoMapper.fromNotificationPreference(notificationPreference);
+        NotificationSettingsResponse responseDto = DtoMapper.fromNotificationSettings(notificationPreference);
 
         return ResponseEntity
                 .status(HttpStatus.CREATED)
@@ -44,7 +44,7 @@ public class NotificationController {
 
         NotificationSettings notificationPreference = notificationService.getPreferenceByUserId(userId);
 
-        NotificationSettingsResponse responseDto = DtoMapper.fromNotificationPreference(notificationPreference);
+        NotificationSettingsResponse responseDto = DtoMapper.fromNotificationSettings(notificationPreference);
 
         return ResponseEntity
                 .status(HttpStatus.OK)
@@ -80,7 +80,7 @@ public class NotificationController {
 
         NotificationSettings notificationSettings = notificationService.changeNotificationSettings(userId, enabled);
 
-        NotificationSettingsResponse responseDto = DtoMapper.fromNotificationPreference(notificationSettings);
+        NotificationSettingsResponse responseDto = DtoMapper.fromNotificationSettings(notificationSettings);
 
         return ResponseEntity
                 .status(HttpStatus.OK)

@@ -20,7 +20,7 @@ public class DtoMapper {
     }
 
     // Build dto from entity
-    public static NotificationSettingsResponse fromNotificationPreference(NotificationSettings entity) {
+    public static NotificationSettingsResponse fromNotificationSettings(NotificationSettings entity) {
 
         return NotificationSettingsResponse.builder()
                 .id(entity.getId())
@@ -40,5 +40,4 @@ public class DtoMapper {
                 .createdOn(entity.getCreatedOn())
                 .type(entity.getType())
                 .build();
-    }
-}
+    }}
